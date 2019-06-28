@@ -18,9 +18,9 @@ async def select(sql,args,size=None):
     async with aiosqlite.connect(DATABASE) as db:
         async with db.execute(sql,args) as cursor:
             if size:
-                rs = cursor.fetchmany(size)
+                rs = await cursor.fetchmany(size)
             else:
-                rs = cursor.fetchall()
+                rs = await cursor.fetchall()
         logging.info("rows returned, len={}".format(len(rs)))
         return rs
 
@@ -125,6 +125,16 @@ class Model(dict,metaclass=ModelMetaClass):
                 setattr(self,key,value)
         return value
     
+    @classmethod
+    def convert2dict(cls,args):
+        schema = getattr(cls,'__schema__',None)
+        kwargs = {}
+        if schema:
+            for k,v in zip(schema,args):
+                kwargs[k] = v
+            return kwargs
+        else:
+            raise Exception('Undefined schema for {}'.format(cls.__table__))
 
 
     @classmethod
@@ -152,7 +162,8 @@ class Model(dict,metaclass=ModelMetaClass):
             else:
                 raise ValueError('Invalid limit value: %s' % str(limit))
         rs = await select(' '.join(sql), args)
-        return [cls(**r) for r in rs]
+        return list(map(lambda x:cls(**cls.convert2dict(x)),rs))
+        #return [cls(**r) for r in rs]
 
     @classmethod
     async def findNumber(cls, selectField, where=None, args=None):
@@ -164,7 +175,8 @@ class Model(dict,metaclass=ModelMetaClass):
         rs = await select(' '.join(sql), args, 1)
         if len(rs) == 0:
             return None
-        return rs[0]['_num_']
+        #rs = cls.convert2dict(rs[0])
+        return rs[0]
 
     @classmethod
     async def find(cls, pk):
@@ -172,7 +184,7 @@ class Model(dict,metaclass=ModelMetaClass):
         rs = await select('%s where `%s`=?' % (cls.__select__, cls.__primary_key__), [pk], 1)
         if len(rs) == 0:
             return None
-        return cls(**rs[0])
+        return cls(**cls.convert2dict(rs[0]))
 
 
     async def save(self):
@@ -180,7 +192,7 @@ class Model(dict,metaclass=ModelMetaClass):
         args.append(self.getValueOrDefault(self.__primary_key__))
         try:
             rows = await execute(self.__insert__, args)
-            print("affected: {}".format(rows))
+            #print("affected: {}".format(rows))
         except:
             print(self.__insert__)
             print(args)

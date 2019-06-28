@@ -6,20 +6,23 @@ def next_id():
 
 class User(Model):
     __table__ = "users"
+    __schema__ = ['id','email','passwd','admin','name','image','created_at']
     '''
     The table for the users
+    The schema should be consistent with the following sequence, and primary_key is alway the first
     '''
 
     id = StringField(primary_key=True,ddl="varchar(50)",default=next_id)
-    admin = BooleanField()
     email = StringField(ddl="varchar(50)")
     passwd = StringField(ddl="varchar(50)")
+    admin = BooleanField()
     name = StringField(ddl="varchar(50)")
     image = StringField(ddl="varchar(500)")
     created_at = FloatField(default=time.time)
 
 class Blog(Model):
     __table__= "blogs"
+    __schema__=['id','user_id','user_name','user_image','title','digest','content','created_at']
     '''
     '''
 
@@ -34,6 +37,7 @@ class Blog(Model):
 
 class Comment(Model):
     __table__= "comments"
+    __schema__=['id','blog_id','user_id','user_name','user_image','content','created_at']
     '''
     '''
 

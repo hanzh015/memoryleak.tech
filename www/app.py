@@ -10,6 +10,7 @@ from jinja2 import FileSystemLoader, Environment
 from datetime import datetime
 from config import configs
 import orm
+from handlers import COOKIE_NAME,cookie2user
 
 def init_jinja2(**kw):
     logging.info('init jinja2...')
@@ -96,6 +97,20 @@ def response_middleware_factory(env):
         return resp
     return response_middleware
 
+@web.middleware
+async def auth_user(request,handler):
+    logging.info('check user {},{}'.format(request.method,request.path))
+    request.__user__ = None
+    cookie_str = request.cookies.get(COOKIE_NAME)
+    if cookie_str:
+        user = await cookie2user(cookie_str)
+        if user:
+            logging.info('set current user: {}'.format(user.email))
+            request.__user__ = user
+    return await handler(request)
+
+    
+
 def datetime_filter(t):
     delta = int(time.time() - t)
     if delta < 60:
@@ -112,7 +127,7 @@ def datetime_filter(t):
 def init(loop):
     orm.setDatabase(configs.db)
     env = init_jinja2(filters=dict(datetime=datetime_filter))
-    app = web.Application(loop=loop,middlewares=[logger_middleware,response_middleware_factory(env)])
+    app = web.Application(loop=loop,middlewares=[logger_middleware,auth_user,response_middleware_factory(env)])
     coroweb.add_routes(app, 'handlers')
     coroweb.add_static(app)
     web.run_app(app,host="127.0.0.1",port="9000")

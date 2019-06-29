@@ -27,11 +27,8 @@ async def select(sql,args,size=None):
 async def execute(sql,args):
     log(sql)
     async with aiosqlite.connect(DATABASE) as db:
-        try:
-            await db.execute(sql,args)
-            await db.commit()
-        except:
-            raise Exception("warning: failed to insert")
+        await db.execute(sql,args)
+        await db.commit()
         affected = db.total_changes
         return affected
 
@@ -190,12 +187,8 @@ class Model(dict,metaclass=ModelMetaClass):
     async def save(self):
         args = list(map(self.getValueOrDefault, self.__fields__))
         args.append(self.getValueOrDefault(self.__primary_key__))
-        try:
-            rows = await execute(self.__insert__, args)
-            #print("affected: {}".format(rows))
-        except:
-            print(self.__insert__)
-            print(args)
+        
+        rows = await execute(self.__insert__, args)
         if rows != 1:
             logging.warn('failed to insert record: affected rows: %s' % rows)
 

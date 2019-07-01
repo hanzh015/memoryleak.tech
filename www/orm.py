@@ -173,7 +173,7 @@ class Model(dict,metaclass=ModelMetaClass):
         if len(rs) == 0:
             return None
         #rs = cls.convert2dict(rs[0])
-        return rs[0]
+        return rs[0][0]
 
     @classmethod
     async def find(cls, pk):

@@ -7,7 +7,7 @@ from sqlite3 import Error
 import json
 import re
 import hashlib
-import time
+import time,math
 
 COOKIE_NAME = 'authentication'
 COOKIE_KEY = 'toad'
@@ -101,7 +101,7 @@ async def get_blogs(*,page='1',order_by='created_at',desc=True):
     else:
         for blog in blogs:
             blog.content = ''
-        return dict(page=page,blogs=blogs)
+        return dict(total=math.ceil(num/p.page_size),page=page,blogs=blogs)
 
 @post('/api/blogs')
 async def create_blog(*,title,digest,content,request):
@@ -170,18 +170,20 @@ async def get_comments(*,page=1,blog_id=None,order_by="created_at",desc=True):
         related_blog = await Blog.find(blog_id)
         if not related_blog:
             raise APIResourceNotFoundError('Comment','The related blog: {} is not found'.format(blog_id))
-        where = 'blog_id={}'.format(blog_id)
+        where = 'blog_id=?'
+        args = [blog_id]
     else:
         where = None
+        args = []
 
-    num = await Comment.findNumber('count(id)',where)
+    num = await Comment.findNumber('count(id)',where,args)
     p = Page(num,page)
     des = ' desc' if desc is True else ' asc'
-    comments = await Comment.findAll(where,orderBy=order_by+des,limit=(p.offset,p.limit))
+    comments = await Comment.findAll(where,args,orderBy=order_by+des,limit=(p.offset,p.limit))
     if len(comments)==0:
         raise APIResourceNotFoundError('Comment','Could not found resource on your specified page')
     else:
-        return dict(page=page,comments=comments)
+        return dict(total=math.ceil(num/p.page_size),page=page,comments=comments)
 
 @post('/api/comments')
 async def create_comment(*,blog_id,content,request):
@@ -258,7 +260,7 @@ async def get_users(*,page=1,order_by='created_at',desc=True):
     else:
         for user in users:
             user.passwd = '********'
-        return dict(page=page,users=users)
+        return dict(total=math.ceil(num/p.page_size),page=page,users=users)
 
 @post('/api/login')
 async def authenticate(*,email,password):
@@ -291,3 +293,27 @@ async def test_login(*,request):
         return web.Response(status=201,body=json.dumps(request.__user__,ensure_ascii=False).encode('utf-8'))
     else:
         return 404
+
+@get('/')
+async def get_index():
+    summary = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    blogs = [
+        Blog(id='1', title='Test Blog', digest=summary, created_at=time.time()-120,user_name="admin"),
+        Blog(id='2', title='Something New', digest=summary, created_at=time.time()-3600,user_name="admin"),
+        Blog(id='3', title='Learn Swift', digest=summary, created_at=time.time()-7200,user_name="admin")
+    ]
+    return {
+        '__template__': 'blogs.html',
+        'blogs': blogs
+    }
+
+@get('/blogs/{blog_id}')
+async def get_blog_page(*,blog_id):
+    blog = await Blog.find(blog_id)
+    if not blog:
+        return 404
+    else:
+        return {
+            '__template__': 'blog_details.html',
+            'blog' : blog
+        }

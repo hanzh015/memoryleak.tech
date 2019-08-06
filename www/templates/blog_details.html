@@ -1,0 +1,49 @@
+<!--This page is for displaying the complete blog-->
+<!--Display blog content using templates, but AJAX call for comments -->
+{% extends '__base__.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block beforehead %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+<!--Load hightlight.js for formating the code block-->
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+
+<script>
+    var converter = new showdown.Converter({emoji:true});
+    var text = " ";
+    var html = converter.makeHtml(text);
+
+    function convert(text){
+        return converter.makeHtml(text);
+    }
+    
+</script>
+{% endblock %}
+{% block content %}
+<h1 class="my-3 ">{{blog.title}}</h1>
+<div><p class="text-muted py-auto" style="float:left">Share:</p>
+    <span style="float:left"><a class="btn btn-sm btn-primary" href="#">share</a></span>
+    <span style="float:right"><a class="btn btn-info btn-sm mx-1" href="/manage/blogs/update/{{ blog.id }}"> Edit </a></span>
+    <span style="float:right"><a class="btn btn-primary btn-sm mr-1" href="#CommentArea">Comment</a></span>
+</div>
+<div>
+<p class="text-muted my-1" style="clear:both;float:left">Posted at {{blog.created_at|datetime}}</p>
+<p class="text-muted text-right mx-3 my-1" style="float:left">Author: {{ blog.user_name }}</p>
+</div>
+<div id="content" style="clear:both">{{ blog.content }}</div>
+<hr>
+<script>
+    var raw = document.getElementById('content').innerHTML;
+    document.getElementById('content').innerHTML = convert(raw);
+    hljs.initHighlightingOnLoad();
+</script>
+<h4>Say something</h4>
+<hr>
+<div id="CommentArea">
+    {{ blog.id }}
+</div>
+<!--Load Babel compiled js-->
+<script src="/static/js/blog_details.js"></script>
+
+{% endblock %}

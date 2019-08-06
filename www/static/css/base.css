@@ -1,0 +1,114 @@
+.vl {
+    border-left: 6px solid green;
+  height: 120px;
+  }
+
+.navbar-nav > li {
+    float: left;
+    position: relative;
+  }
+.navbar-dark .navbar-nav .active::after {
+    border-bottom: 5px solid #5bc0eb;
+    bottom: -11px;
+    content: " ";
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+.navbar-dark .navbar-nav .active>.nav-link{
+    color:#5bc0eb;
+}
+
+
+.navbar-light .navbar-nav .active::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    content: " ";
+    border-bottom: 5px solid #5BC0EB;
+}
+
+
+ul.jumb{
+    list-style: none;
+    margin: 0;
+	padding: 0;
+}
+
+li.jumblist{
+    display: inline-block;
+	zoom: 1;
+    *display: inline;
+    vertical-align:  middle;
+}
+
+li.jumblist a{
+    display: block;
+    font-size: 1.4em;
+    margin: 0 5px;
+    text-decoration: none;
+}
+
+li.jumblist a i{
+    color: #5BC0EB;
+}
+
+.leak-header{
+    position: relative;
+    min-height: 65px;
+}
+
+.leak-header-memory{
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    font-size: 3em;
+    color:#0f0f0f;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.leak-header-memory:link{
+    color:#0f0f0f;
+    text-decoration: none
+}
+.leak-header-memory:visited{
+    color:#0f0f0f;
+    text-decoration: none
+}
+.leak-header-memory:hover{
+    color:#0f0f0f;
+    text-decoration: none
+}
+.leak-header-memory:active{
+    color:#0f0f0f;
+    text-decoration: none
+}
+.leak-header-leak{
+    position: absolute;
+    bottom: -5px;
+    left:265px;
+    font-size: 3em;
+    color: #5bc0eb;
+    font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+.leak-header-tagline{
+    position: absolute;
+    bottom: 0;
+    right:5px;
+    font-size: 1.2em;
+    color:#0f0f0f;
+    font-family: 'Courier New', Courier, monospace
+
+}
+
+.modal-backdrop {
+    /* bug fix - no overlay */    
+    display: none;    
+}
+
+.modal {
+    background: rgba(0,0,0,0.5);
+  }

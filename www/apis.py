@@ -20,13 +20,14 @@ class Page(object):
 
     __repr__ = __str__
 
-def get_page_index(page_idx):
+def get_page_index(page_idx,page_size='8'):
     try:
         num = int(page_idx)
-        if num >=1:
-            return num
+        page_size = int(page_size)
+        if num >=1 and page_size>=1:
+            return num,page_size
         else:
-            raise Exception()
+            raise APIValueError('Invalid Parameter:\'page\'')
     except:
         raise APIValueError('Invalid Parameter:\'page\'')
 

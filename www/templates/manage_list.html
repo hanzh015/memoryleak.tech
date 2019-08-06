@@ -1,0 +1,17 @@
+<!--This page is to list all the blogs of the current user-->
+{% extends '__base__.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block beforehead %}
+
+
+{% endblock %}
+{% block content %}
+<div id='list'>{{ category }}</div>
+<script src="/static/js/manage_list.js"></script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+{% endblock %}

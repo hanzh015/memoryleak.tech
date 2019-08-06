@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--THIS IS THE ROOT HTML-->
+<!--Implement login, register. Using bootstrap modal -->
+<!--Once authenticated, dropdown on the right top becomes information links, including create a new post or
+manage your posts or manage all posts as admin-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block meta %} <!--block meta--> {% endblock %}
+        <title>{% block title %} {% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!--Icons-->
+        <script src="https://kit.fontawesome.com/51f5553199.js"></script>
+        <!-- Load React. -->
+        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <!--Load CryptoJS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9/crypto-js.min.js"></script>
+        <link rel="stylesheet" href="/static/css/base.css">
+        {% block beforehead %}<!--insert before head close--> {% endblock %}
+    </head>
+    <body>
+        <!--Navigation bar-->
+        <div class="leak-header">
+            <a class='leak-header-memory' href='/'>MemoryLeak</a>
+            <span class='leak-header-leak'>.tech</span>
+            <span class='leak-header-tagline d-none d-sm-block'>on the way of solving problems</span>
+        </div>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+            <!--Brand-->
+            <a class="navbar-brand mx-3" href="/"><i class="fas fa-home fa-lg mr-1"></i></a>
+            <!--Collapse Button-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!--NavBar Links-->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav mr-auto" id="topnav">
+                    <li class="nav-item mx-2" id="nav_blogs">
+                        <a class="nav-link" href="/blogs" ><i class="fas fa-blog fa-lg mr-1"></i>Blogs</a>
+                    </li>
+                    <li class="nav-item mx-2" id="nav_tutorials">
+                        <a class="nav-link" href="/tutorials"><i class="fas fa-chalkboard-teacher fa-lg mr-1"></i>Tutorials</a>
+                    </li>
+                    <li class="nav-item mx-2" id="nav_leetcode">
+                        <a class="nav-link" href="/leetcode"><i class="fas fa-terminal fa-lg mr-1"></i>Problems</a>
+                    </li>
+                    <li class="nav-item mx-2" id="nav_jobs">
+                        <a class="nav-link" href="#"><i class="fas fa-users fa-lg mr-1"></i>For Employers</a>
+                    </li>
+                </ul>
+                <!--Search-->
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>-->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" type="submit"><i class="fas fa-search fa-lg"></i></a>
+                        </li>
+                    </ul>
+                </form>
+                <!--Login menu, if logged in, show management options in dropdown, if not, show links for register and
+                log in-->
+                <div id='user'>
+                    {{ user }}
+                </div>
+                <!--Load Babel compiled js-->
+                <script src="/static/js/base.js"></script>
+            </div>
+        </nav>
+        <script>
+            $( '#topnav  a' ).on( 'click', function () {
+                $( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
+                $( this ).parent( 'li' ).addClass( 'active' );
+            });
+        </script>
+        <!--Body Content-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    {% block content %} {% endblock %}
+                </div>
+                <div class="col-sm-3">
+                    <div class="card my-3">
+                        <div class="card-header">
+                            <h4>Calendar</h4>
+                        </div>
+                        <div class="card-body">
+        
+                        </div>
+                    </div>
+                    <div class="card my-3">
+                        <div class="card-header">
+                            <h4>Tags</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>'Lorem ipsum dolor sit 
+                                amet, consectetur adipisicing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card my-3">
+                        <div class="card-header">
+                            <h4>Links</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>'Lorem ipsum dolor sit 
+                                amet, consectetur adipisicing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-8 text-center">
+                        <h5>Memleak's frontend was powered by
+                            <a href="https://reactjs.org"> React</a> and 
+                            <a href="https://getbootstrap.com/">Bootstrap</a></h5>
+                        <h5>Memleak's backend was built from scratch based on 
+                            <a href="https://aiohttp.readthedocs.io/en/stable/">aiohttp</a> in Python3</h5>
+                        <p>2019 Han Zhang, Copy Right reserverd</p>
+                        <ul class="jumb">
+                            <li class="jumblist"><a href="https://reactjs.org"><i class="fab fa-react fa-2x"></i></a></li>
+                            <li class="jumblist"><a href="https://getbootstrap.com/"><i class="fab fa-bootstrap fa-2x"></i></a></li>
+                            <li class="jumblist"><a href="https://www.python.org/"><i class="fab fa-python fa-2x"></i></a></li>
+                            <li class="jumblist"><a href="https://www.javascript.com/"><i class="fab fa-js-square fa-2x"></i></a></li>
+                        </ul> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

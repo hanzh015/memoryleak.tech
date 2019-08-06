@@ -16,6 +16,7 @@ create table blogs (
     user_id varchar(50) not NULL,
     user_name varchar(50) not NULL,
     user_image varchar(500) not NULL,
+    category varchar(50) not NULL,
     title varchar(50) not NULL,
     digest varchar(50) not NULL,
     content text not NULL,
@@ -24,6 +25,7 @@ create table blogs (
 );
 
 create index blogs_idx_created_at on blogs(created_at);
+create index blogs_idx_category on blogs(category);
 
 create table comments (
     id varchar(50) not NULL,

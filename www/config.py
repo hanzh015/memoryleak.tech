@@ -23,7 +23,7 @@ def toDict(dic):
     return r
 
 configs = {
-    'db':'../test/awesome.db'
+    'db':'hanblog.db'
 }
 
 configs = toDict(configs)

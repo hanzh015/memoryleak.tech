@@ -134,7 +134,7 @@ class TestAPI(unittest.TestCase):
 
         #create a comment
         blog_id = '001561950111158dedd6baf0605430bac2b63f95be52b0b000'
-        comment = {'blog_id':blog_id,'content':'awesome post!'}
+        comment = {'blog_id':blog_id,'content':':horse:'}
         r = requests.post(_URL+'/api/comments',data=comment,cookies=ck)
         global _CID
         _CID = r.json()['id']
@@ -142,7 +142,7 @@ class TestAPI(unittest.TestCase):
         c = c.json()['comments']
         ids = [comment['id'] for comment in c]
         self.assertIn(_CID,ids)
-
+        '''
         #delete by author
         r = requests.post(_URL+'/api/comments/'+_CID+'/delete',data={'a':'b'},cookies=ck)
         #print(r.text)
@@ -171,7 +171,7 @@ class TestAPI(unittest.TestCase):
         c = c.json()['comments']
         ids = [comment['id'] for comment in c]
         self.assertNotIn(_CID,ids)
-
+        '''
 
 if __name__=='__main__':
     unittest.main()

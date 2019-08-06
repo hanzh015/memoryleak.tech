@@ -22,7 +22,7 @@ class User(Model):
 
 class Blog(Model):
     __table__= "blogs"
-    __schema__=['id','user_id','user_name','user_image','title','digest','content','created_at']
+    __schema__=['id','user_id','user_name','user_image','title','category','digest','content','created_at']
     '''
     '''
 
@@ -31,6 +31,7 @@ class Blog(Model):
     user_name = StringField(ddl="varchar(50)")
     user_image = StringField(ddl="varchar(500)")
     title = StringField(ddl="varchar(500)")
+    category = StringField(ddl="varchar(50)")
     digest = StringField(ddl="varchar(500)")
     content = TextField()
     created_at = FloatField(default=time.time)

@@ -1,0 +1,27 @@
+<!--This page is used for create or update posts -->
+{% extends '__base__.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block beforehead %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+<!--Load hightlight.js for formating the code block-->
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+
+<script>
+    var converter = new showdown.Converter({emoji:true});
+    var text = " ";
+    var html = converter.makeHtml(text);
+
+    function convert(text){
+        return converter.makeHtml(text);
+    }
+    
+</script>
+{% endblock %}
+{% block content %}
+<div id="blog_form">
+    {{init}}
+</div>
+<script src="/static/js/manage_create.js"></script>
+{% endblock %}

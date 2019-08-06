@@ -1,0 +1,18 @@
+# ignore pycache
+__pycache__/
+
+# ignore TODO list
+*.txt
+
+# ignore vscode configs
+.vscode/
+
+# ignore database
+*.db
+
+# ignore json config files
+*.json
+
+# ignore npm packages, babel generated js scripts but include js source code
+/www/static/js/node_modules/
+/www/static/js/*.js

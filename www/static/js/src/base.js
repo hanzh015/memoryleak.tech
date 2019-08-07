@@ -55,10 +55,12 @@ class Dropdown extends React.Component{
                 var email = document.getElementById('register_email').value
                 var passwd = document.getElementById('register_password1').value
                 var name = document.getElementById('register_name').value
+                var invitation = document.getElementById('register_invitation').value
                 var data = JSON.stringify({
                     'email': email,
                     'passwd':CryptoJS.SHA1(email+":"+passwd).toString(),
-                    'name':name
+                    'name':name,
+                    'invitation':invitation
                 })
                 var xhr = new XMLHttpRequest()
                 xhr.open('POST','/api/users',true)
@@ -199,7 +201,13 @@ class Dropdown extends React.Component{
                         <label htmlFor="register_password2">Confirm Password:</label>
                         <input type="password" className="form-control" id="register_password2" placeholder="Enter password" name="cpassword" onChange={()=>{this.confirmPassword()}} required/>
                         <div className="valid-feedback">Valid.</div>
-                        <div className="invalid-feedback">The passwords don't match.</div>
+                        <div className="invalid-feedback">The password doesn't match.</div>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="register_invitation">Invitation code:</label>
+                        <input type="text" className="form-control" id="register_invitation" placeholder="Enter invitation code" name="invitation" required/>
+                        <div className="valid-feedback">Valid.</div>
+                        <div className="invalid-feedback">Please fill out this field.</div>
                     </div>
                     <div className="form-group form-check">
                         <label className="form-check-label">

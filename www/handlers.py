@@ -1,6 +1,7 @@
 from coroweb import get, post
 from models import User, Blog, Comment, next_id
 from orm import select
+from config import configs
 import asyncio
 from apis import get_page_index, Page, APIError, APIValueError, APIResourceNotFoundError, APIPermissionError
 from aiohttp import web
@@ -283,7 +284,7 @@ async def delete_comment(*,comment_id,request):
 _RE_EMAIL = re.compile(r'^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$')
 _RE_SHA1 = re.compile(r'^[0-9a-z]{40}$')
 @post('/api/users')
-async def create_user(*,email,passwd,name):
+async def create_user(*,email,passwd,name,invitation):
     #user registry api
     if not name or not name.strip():
         raise APIValueError('name','name has to contain at least one non space letter')
@@ -291,6 +292,8 @@ async def create_user(*,email,passwd,name):
         raise APIValueError('email','invalid email')
     if not _RE_SHA1.match(passwd):
         raise APIValueError('passwd','unencrypted password')
+    if not configs.invitation == hashlib.sha1(invitation.encode('utf-8')).hexdigest():
+        raise APIPermissionError('invitation code','wrong invitation code')
     
     users = await User.findAll(where="email=?",args=[email,])
     if len(users)!=0:

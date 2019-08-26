@@ -256,17 +256,10 @@ class TableList extends React.Component{
                 <button className="page-link" onClick={()=>this.props.switch_page(index+1)}>{index+1}</button>
             </li>);
         });
-        return(
-        <div>
-            <table className="table table-striped">
-                <thead>
-                    {this.props.schema}
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
-            <ul className="pagination justify-content-center">
+        var navs;
+        if(pagenation.length!=0){
+            navs = (
+                <ul className="pagination justify-content-center">
                 <li className="page-item">
                     <button className="page-link" disabled={this.props.page==1} onClick={()=>{
                         if(this.props.page>1){
@@ -283,6 +276,23 @@ class TableList extends React.Component{
                     }}> {">>"}</button>
                 </li>
             </ul>
+            )
+        }else{
+            navs = (
+                <p>You currently don't have a record here!</p>
+            )
+        }
+        return(
+        <div>
+            <table className="table table-striped">
+                <thead>
+                    {this.props.schema}
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+            {navs}
         </div>
         )
     }

@@ -143,7 +143,7 @@ class Dropdown extends React.Component{
             )
             var name_display = this.state.user.name.length>12?(this.state.user.name.substr(0,9)+'...'):this.state.user.name;
             return (
-                <div className="navbar-nav dropdown mx-sm-2" style={{width:'165px'}}>
+                <div className="navbar-nav dropdown mx-sm-2" style={{width:'200px'}}>
                     <a className="navbar-item nav-link dropdown-toggle" href='#' 
                     id="logindrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" key="user-toggle">
                          <i className="fas fa-user fa-lg mx-1"></i>  {name_display}
@@ -168,7 +168,7 @@ class Dropdown extends React.Component{
                     </div>
                     <div className="form-group form-check">
                         <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" name="remember"/> Remember my login state for 7 days.
+                            <input className="form-check-input" type="checkbox" name="remember"/> Remember my signin state for 7 days.
                         </label>
                         <div className="valid-feedback">Valid.</div>
                         <div className="invalid-feedback">Please fill out this field.</div>
@@ -211,7 +211,7 @@ class Dropdown extends React.Component{
                     </div>
                     <div className="form-group form-check">
                         <label className="form-check-label">
-                            <input className="form-check-input" type="checkbox" name="remember" required/> I have known blabla.
+                            <input className="form-check-input" type="checkbox" name="remember" required/> I have known (Some policy in future...)
                         </label>
                         <div className="valid-feedback">Valid.</div>
                         <div className="invalid-feedback">Please read and admit our policy.</div>
@@ -223,26 +223,26 @@ class Dropdown extends React.Component{
             var form_display = this.state.register?register_form:login_form;
             var l_active_state = this.state.register?" ":" active";
             var r_active_state = this.state.register?" active":" ";
-
+                // data-toggle="modal" data-target="#loginModal"
             return (
-                <div style={{width:'165px'}}>
+                <div style={{width:'200px'}}>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item mx-2" key="awesome-register">
-                            <a type="button" className="nav-link" data-toggle="modal" data-target="#loginModal">
-                            <i className="fas fa-sign-in-alt fa-lg mx-1"></i> Login/SignUp</a>
+                            <a className="nav-link" href="javascript:void(0);" onClick={()=>{$("#loginModal").modal('show');}}>
+                            <i className="fas fa-sign-in-alt fa-lg mx-1"></i> Signin/SignUp</a>
                         </li>
                     </ul>
                     <div className="modal" id="loginModal">
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h4 className="modal-title">Log in before you shine</h4>
+                                    <h4 className="modal-title">Welcome back!</h4>
                                     <button type="button" className="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div className="modal-body">
                                     <ul className="nav nav-pills justify-content-center">
                                         <li className="nav-item">
-                                            <a className={"nav-link"+l_active_state} href="javascript:void(0);" onClick={()=>this.setState({register:false})}>Log in</a>
+                                            <a className={"nav-link"+l_active_state} href="javascript:void(0);" onClick={()=>this.setState({register:false})}>Sign in</a>
                                         </li>
                                         <li className="nav-item">
                                             <a className={"nav-link"+r_active_state} href="javascript:void(0);" onClick={()=>this.setState({register:true})}>Register</a>

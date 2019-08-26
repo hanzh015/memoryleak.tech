@@ -57,16 +57,20 @@ li.jumblist a i{
 
 .leak-header{
     position: relative;
-    min-height: 65px;
+    min-height: 72px;
+}
+@font-face {
+    font-family: squarerising;
+    src: url(/static/fonts/SquareRaising-ygGZ.ttf);
 }
 
 .leak-header-memory{
     position:absolute;
-    bottom:-5px;
-    left:0;
-    font-size: 3em;
+    bottom:-2px;
+    left:8px;
+    font-size: 2.6em;
     color:#0f0f0f;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: squarerising;
 }
 
 .leak-header-memory:link{
@@ -91,7 +95,7 @@ li.jumblist a i{
     left:265px;
     font-size: 3em;
     color: #5bc0eb;
-    font-family: Georgia, 'Times New Roman', Times, serif
+    font-family: squarerising;
 }
 
 .leak-header-tagline{
@@ -112,3 +116,8 @@ li.jumblist a i{
 .modal {
     background: rgba(0,0,0,0.5);
   }
+
+@font-face {
+font-family: myFirstFont;
+src: url(/static/fonts/SquareRaising-ygGZ.ttf);
+}

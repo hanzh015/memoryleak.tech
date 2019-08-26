@@ -120,12 +120,9 @@ async def get_blogs(*,page='1',size='8',order_by='created_at',desc=True,user=Fal
         p = Page(num,page,size)
         des = ' desc' if desc is True else ' asc'
         blogs = await Blog.findAll('user_id=?',[request.__user__.id],orderBy=order_by+des,limit=(p.offset,p.limit))
-    if len(blogs)==0:
-        raise APIResourceNotFoundError('Blog','Could not found resource on your specified page')
-    else:
-        for blog in blogs:
-            blog.content = ''
-        return dict(total=p.page_count,page=page,blogs=blogs)
+    for blog in blogs:
+        blog.content = ''
+    return dict(total=p.page_count,page=page,blogs=blogs)
 
 @get('/api/blogs/{blog_id}')
 async def get_blog_details(*,blog_id):
@@ -245,10 +242,7 @@ async def get_comments(*,page='1',size='8',blog_id=None,order_by="created_at",de
         p = Page(num,page,size)
         comments = await Comment.findAll(where,args,orderBy=order_by+des,limit=(p.offset,p.limit))
 
-    if len(comments)==0:
-        raise APIResourceNotFoundError('Comment','Could not found resource on your specified page')
-    else:
-        return dict(total=p.page_count,page=page,comments=comments)
+    return dict(total=p.page_count,page=page,comments=comments)
 
 @post('/api/comments')
 async def create_comment(*,blog_id,content,request):
@@ -326,12 +320,9 @@ async def get_users(*,page='1',size='8',order_by='created_at',desc=True,request)
     p = Page(num,page,size)
     des = ' desc' if desc is True else ' asc'
     users = await User.findAll(orderBy=order_by+des,limit=(p.offset,p.limit))
-    if len(users)==0:
-        raise APIResourceNotFoundError('User','Could not found resource on your specified page')
-    else:
-        for user in users:
-            user.passwd = '********'
-        return dict(total=p.page_count,page=page,users=users)
+    for user in users:
+        user.passwd = '********'
+    return dict(total=p.page_count,page=page,users=users)
 
 @post('/api/users/{user_id}/delete')
 async def delete_user(*,user_id,request):

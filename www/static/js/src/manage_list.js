@@ -162,16 +162,9 @@ class ManageList extends React.Component{
         }else{
 
         }
-
-        return (
-            <div>
-                {table_title}
-                <table className="table table-striped">
-                    {head}
-                    <tbody>
-                        {rows}
-                    </tbody>
-                </table>
+        var navs;
+        if(pagenation.length!=0){
+            navs = (
                 <ul className="pagination justify-content-center">
                     <li className="page-item">
                         <button className="page-link" disabled={this.state.page==1} onClick={()=>{
@@ -189,8 +182,26 @@ class ManageList extends React.Component{
                         }}> {">>"}</button>
                     </li>
                 </ul>
+            )
+        }else{
+            navs = (
+                <p>You currently don't have a record here!</p>
+            )
+        }
+        
+        return (
+            <div>
+                {table_title}
+                <table className="table table-striped">
+                    {head}
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+                {navs}
             </div>
         )
+       
     }
 }
 

@@ -86,6 +86,17 @@ class CreateForm extends React.Component{
         }
         event.target.classList.add('was-validated');
     }
+    componentDidMount(){
+        document.getElementById('post_content').querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+          });
+    }
+
+    componentDidUpdate(){
+        document.getElementById('post_content').querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+            });
+    }
 
     render(){
         var textbox;

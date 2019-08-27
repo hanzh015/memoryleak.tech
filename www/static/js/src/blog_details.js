@@ -69,7 +69,7 @@ class Comments extends React.Component{
     }
 
     render(){
-        if(this.props.comments){
+        if(this.props.comments&&this.props.comments.length!=0){
 
             const comments_list = this.props.comments.map((x,index)=>{
                 return (

@@ -84,7 +84,7 @@ class BlogList extends React.Component{
     }
 
     render(){
-        if(this.state.blogs)
+        if(this.state.blogs&&this.state.blogs.length!=0)
         {
             const blogs_list = this.state.blogs.map((b)=>{
                 return <Blog key={b.id} info={b}/>

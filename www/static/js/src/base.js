@@ -143,8 +143,8 @@ class Dropdown extends React.Component{
             )
             var name_display = this.state.user.name.length>12?(this.state.user.name.substr(0,9)+'...'):this.state.user.name;
             return (
-                <div className="navbar-nav dropdown mx-sm-2" style={{width:'200px'}}>
-                    <a className="navbar-item nav-link dropdown-toggle" href='#' 
+                <div className="navbar-nav dropdown mx-sm-2" style={{width:'210px'}}>
+                    <a className="navbar-item nav-link navbar-custom-font dropdown-toggle" href='#' 
                     id="logindrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" key="user-toggle">
                          <i className="fas fa-user fa-lg mx-1"></i>  {name_display}
                     </a>
@@ -225,10 +225,10 @@ class Dropdown extends React.Component{
             var r_active_state = this.state.register?" active":" ";
                 // data-toggle="modal" data-target="#loginModal"
             return (
-                <div style={{width:'200px'}}>
+                <div style={{width:'210px'}}>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item mx-2" key="awesome-register">
-                            <a className="nav-link" href="javascript:void(0);" onClick={()=>{$("#loginModal").modal('show');}}>
+                            <a className="nav-link navbar-custom-font" href="javascript:void(0);" onClick={()=>{$("#loginModal").modal('show');}}>
                             <i className="fas fa-sign-in-alt fa-lg mx-1"></i> Signin/SignUp</a>
                         </li>
                     </ul>

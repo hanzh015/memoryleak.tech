@@ -67,6 +67,21 @@ li.jumblist a i{
     font-style: normal;
 }
 
+
+@font-face {
+    font-family: 'swanseabold';
+    src: url('/static/fonts/swanse_b-webfont.woff2') format('woff2'),
+         url('/static/fonts/swanse_b-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.navbar-custom-font {
+    font-family: 'swanseabold';
+    font-size: 1.2em;
+}
+
 .leak-header-memory{
     position:absolute;
     bottom:-2px;
